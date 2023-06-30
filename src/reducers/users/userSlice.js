@@ -14,6 +14,11 @@ export const userSlice = createSlice({
             state.email = action.payload.email;
             state.fullName = action.payload.fullName;
             state.token = action.payload.token;
+        },
+        unSetUser: (state) => {
+            state.email = "";
+            state.fullName = "";
+            state.token = "";
         }
     },
 })
