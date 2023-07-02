@@ -17,9 +17,10 @@ export const Index = () => {
             .then(response => {
                 const users = response.data;
                 const userToLog = users.find(user => user.email === emailField.current.value);
+                
                 if (userToLog) {
                     if (userToLog.last_name === passwordField.current.value) {
-                        console.log('usuario autenticado');
+                        
                         dispatch(setUser({
                             email: userToLog.email,
                             fullName: `${userToLog.first_name} ${userToLog.last_name}`,
@@ -29,7 +30,7 @@ export const Index = () => {
                     }
                 }
             })
-            .error(error => { console.log(error) });
+            .catch(error => {console.log(error)});
     }
 
 
@@ -49,7 +50,7 @@ export const Index = () => {
                         <label className="form-label" for="form2Example2">Password</label>
                     </div>
 
-                    <button type="button" className="btn btn-primary btn-block mb-4">Sign in</button>
+                    <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
                 </form>
             </div>
         </div>
