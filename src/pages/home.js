@@ -1,28 +1,34 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ProductList from "../components/productList";
+import  Axios  from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import ProductList from '../components/ProductList';
+import {unSetUser} from "../reducers/users/userSlice"
+import { useNavigate } from 'react-router';
 
 export const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(state => state.user)
+  const [products, setProducts] = useState([]);
 
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.user)
-    const [products, setProducts]=useState([]);
-    
-    useEffect(()=>{
-        axios.get('http://localhost:3000/products')
-        .then(res=>{
-            setProducts(res.data);
-        })
-        .catch(err=>{console.log(err)});
-    },[])
+  useEffect(()=>{
+    Axios.get("http://localhost:3000/products")
+    .then(res=>{
+        setProducts(res.data);
+    })
+    .catch(e =>{console.log(e)});
+  }, [])
 
-    return (
-        <div>
-            <h2>Home</h2>
-            <p>Bienevenido {user.fullName} / {user.email} </p>
-            <button>Logout</button>
-            <ProductList products={products} />
-        </div>
-    )
+function handleClick(e){
+  dispatch(unSetUser());
+  navigate("/");
+}
+  return (
+    <div>
+      <h2> Home </h2>
+      <p> Bienvenido {user.fullname} / {user.email}</p>
+      <button className='btn btn-primary' onClick={handleClick}>Logout</button>
+      <ProductList products={products}/>
+    </div>
+  )
 }
